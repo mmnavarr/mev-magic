@@ -1,40 +1,23 @@
-# MEV Template
-
-> Designed by [DeGatchi](https://twitter.com/DeGatchi).
-
-Bootstrap your MEV bot strategies with a simple boilerplate to build on top of.
-
-## How To Use This Template
-
-I wrote an article [How To Build A MEV Bot](https://www.degatchi.com/articles/how-to-build-a-mev-bot) that explains the overall architecture you need to think of to build a bot - from getting a strategy and fetching data to general tips on design structure (that you most likely wont find anywhere else).
-
-I've built out a fair few foundational features that you can customsie to your liking. Whether your strategy utilises a mempool scanner, next block strategy, event streaming, this repo lays the basics out so you don't need to copy and paste your bots for new strategies.
-s
-Majority of these features can be expanded upon to become much more comprehensive, however it's not wise to open source it since your competition will either use it/know how advance your system is ;)
-
-Having said that, the aim of this was to create something to help people that are struggling to get into MEV. Despite it being a highly competitive field where this repo would enhance/onboard new competitors, I wanted to give people that are in the same position as I once was a chance to break into the field. It's a cold world out there in MEV-land but hopefully this will give you that inspiration you need to keep pushing forward <3
+# MEV Magic
 
 ## Quick Start
 
 - Get a node from [QuickNode](https://www.quicknode.com) as they have a free websocket option or you can run your own node.
 - Import your EOA priv key for the bot to execute transactions.
-- Add your discord websocket to send alerts to.
 - For testing, run `cargo run`
 - For production, run `cargo run --release`
 
-## Features
+## Magic Unlock Backrun Strategy
 
-This repo comes with the following features implemented.
+Back Test Strategy:
 
-- [x] Simple discord message system.
-- [x] Historic block function caller.
-- [x] Uniswap `amountIn` + `amountOut` functions.
-- [x] Contract ABI binding.
-- [x] Template contract
-  - [x] Uniswap getters.
-  - [x] Withdraw ERC20 + ETH functions.
-- [x] Mempool Monitoring.
-  - [x] Simple tx decoding.
+1. Watch for `withdraw` events from the Atlas Mine contract `0x1EAb8B6B2f73239B01B20CAB5C2c9B7E80ac7743`
+2. Compute $MAGIC price delta from time of event and 5 minutes later
+3. Tally positive and negative deltas and the mean difference
+    1. With prices generally trending down, how can we best determine the price impact of unlocked magic?
+4. Determine if it is probable that large withdrawls have negative price movement
+    1. If so, the strategy would be to backrun the withdrawl with a sell swap and buy back in after some set time intetval
+
 
 ### Mempool Monitoring Example
 
@@ -72,41 +55,8 @@ Transaction: Transaction {
         inner: {},
     },
 }
-Router Call: SwapExactETHForTokens(
-    SwapExactETHForTokensCall {
-        amount_out_min: 4709638961078363,
-        path: [
-            0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83,
-            0xbe41772587872a92184873d55b09c6bb6f59f895,
-        ],
-        to: 0xe88102f2900483c63d0adcdaf4839c2759949de6,
-        deadline: 12622500000,
-    },
-)
 ```
 
-## Testing Onchain Data
+## Inspiration
 
-Setting up environment:
-
-- Install python3: `pip install`.
-- Install modules: `pip install web3`.
-- Run: `python3 block_history.py`.
-
-5 main components to consider:
-
-- `provider`: Which chain is being utilised.
-- `abi`: The contract interface to interact with.
-- `block`: Which mined block you're calling from (can be past block).
-- `contract address`: Contract address to call.
-- `function call`: Function to call from the `contract address`.
-
-## Magic Unlock FR
-
-Back Test Strategy:
-
-1. Watch for `withdraw` or `withdrawAll` events from the Atlas Mine contract `0x1EAb8B6B2f73239B01B20CAB5C2c9B7E80ac7743`
-2. Compute $MAGIC price delta from time of event and 5 minutes later
-3. Tally positive and negative deltas and the mean difference
-   i. With prices generally trending down, how can we best determine the price impact of unlocked magic?
-4. Determine profitability of selling @ withdrawal time and buying back in 5 minutes later
+[DeGatchi](https://twitter.com/DeGatchi) wrote an article [How To Build A MEV Bot](https://www.degatchi.com/articles/how-to-build-a-mev-bot) that explains the overall architecture you need to think of to build a bot - from getting a strategy and fetching data to general tips on design structure (that you most likely wont find anywhere else).
