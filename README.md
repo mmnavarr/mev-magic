@@ -1,5 +1,7 @@
 # MEV Magic
 
+A project to play with Rust in Ethereum. Goal is to pull all withdraw events from the $MAGIC Atlas Mine. The Atlas Mine has 2w/4w/3m/6m/1y lock ups to farm $MAGIC. Some holders have substantial amounts locked up. The goal is to see if there is any MEV to be had by backrunning the withdraw events with sell orders knowing the price movement is *probably* going to be negatively impacted. 
+
 ## Quick Start
 
 - Get a node from [QuickNode](https://www.quicknode.com) as they have a free websocket option or you can run your own node.
