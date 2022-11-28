@@ -80,7 +80,7 @@ pub async fn run() -> Result<(), Box<dyn Error>> {
         }
 
         // Increment current block to get to the latest block
-        current_block = current_block + 1000;
+        current_block = current_block + PAGE_SIZE;
         println!("current_block after increment={current_block}");
     }
 
